@@ -1,0 +1,122 @@
+/*================================================================
+Style guide
+================================================================*/
+/*
+-------------------------------------
+Variables
+-------------------------------------
+-------------------------------------
+-------------------------------------
+-------------------------------------
+ */
+
+/*Filters: https://codepen.io/sosuke/pen/Pjoqqp*/
+/*Filters: https://codepen.io/jumarjuaton/full/mdJYWYq*/
+/*================================================================
+Variables
+================================================================*/
+:root {
+    --base-color-1: #A61C47;
+    --header-height: 100px;
+}
+/*================================================================
+Header
+================================================================*/
+body{
+    padding-top: var(--header-height);
+}
+.main-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 1000;
+    box-shadow: 0 10px 8px rgba(208,208,208,0.5);
+}
+.main-header .col{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+}
+.logo{
+    color: var(--base-color-1);
+    font-size: 40px;
+    text-decoration: none;
+}
+.shopping-cart{
+    position: relative;
+}
+.shopping-cart img{
+    display: block;
+    height: 40px;
+}
+.shopping-cart span{
+    position: absolute;
+    bottom: -10px;
+    right: -15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 5px;
+    border-radius: 50%;
+    background: var(--base-color-1);
+    color: #fff;
+}
+.shopping-cart span:empty{
+    display: none;
+}
+/*================================================================
+Product list
+================================================================*/
+.product-list{
+    padding: 40px 0;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+}
+@media all and (min-width: 768px) {
+    .product-list{
+        padding: 60px 0;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media all and (min-width: 981px) {
+    .product-list{
+        padding: 5.2vw 0;
+    }
+}
+/*================================================================
+Product list
+================================================================*/
+.product{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(208,208,208,0.5);
+}
+.product__title{
+    font-size: 40px;
+    margin: 0 0 10px;
+}
+.product__image {
+    display: block;
+    margin: 0 0 10px;
+    max-width: 100%;
+}
+.product__price {
+    margin: 0 0 10px;
+    color: var(--base-color-1);
+    font-size: 20px;
+}
+.product__button{
+    margin-top: auto;
+}
+.product :last-child{
+    margin-bottom: 0;
+}
