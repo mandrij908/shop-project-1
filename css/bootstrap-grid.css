@@ -25,27 +25,23 @@ html {
 
 @media (min-width: 576px) {
   .container {
-    max-width: 540px;
+    max-width: 90%;
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    max-width: 720px;
+    max-width: 90%;
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 991px) {
   .container {
-    max-width: 960px;
+    width: 90%;
+    max-width: 1180px;
   }
 }
 
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1170px;
-  }
-}
 
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
   width: 100%;
@@ -57,25 +53,27 @@ html {
 
 @media (min-width: 576px) {
   .container, .container-sm {
-    max-width: 540px;
+    max-width: 90%;
   }
 }
 
 @media (min-width: 768px) {
   .container, .container-sm, .container-md {
-    max-width: 720px;
+    max-width: 90%;
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 991px) {
   .container, .container-sm, .container-md, .container-lg {
-    max-width: 960px;
+    width: 90%;
+    max-width: 1180px;
   }
 }
 
 @media (min-width: 1200px) {
   .container, .container-sm, .container-md, .container-lg, .container-xl {
-    max-width: 1170px;
+    width: 90%;
+    max-width: 1180px;
   }
 }
 

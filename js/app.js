@@ -1,13 +1,75 @@
+class BackDrop {
+    constructor(){
+        this.backDropElement = document.createElement('div');
+        this.backDropElement.className = 'back-drop';
+        document.querySelector('body').appendChild(this.backDropElement);
+    }
+
+    toggle(){
+        this.backDropElement.classList.toggle('back-drop--active');
+    }
+}
+
 class ShoppingCart {
     constructor() {
         this.productsInCart = [];
-        this.price = 0;
+        this.sum = 0;
+        this.cartElement = document.querySelector('.shopping-cart');
+        this.productCounderElement = document.querySelector('.shopping-cart__counter');
+        this.productIconElement = document.querySelector('.shopping-cart__icon');
+        this.productCounderElement.addEventListener('click', this.toggleCheckoutVisibility.bind(this));
+        this.productIconElement.addEventListener('click', this.toggleCheckoutVisibility.bind(this));
+        this.checkoutCreated = false;
     }
 
-    addToCat(id, price){
-        this.productsInCart.push(id);
-        this.price += +price;
-        console.log(this.productsInCart, this.price)
+    addToCat(productObject){
+        this.productsInCart.push(productObject);
+        this.updateCounter();
+        this.createCheckout();
+        this.updateCheckout();
+    }
+
+    updateCounter(){
+        this.productCounderElement.textContent = this.productsInCart.length.toString();
+    }
+
+    createCheckout(){
+        if(this.checkoutCreated){
+            return;
+        }
+
+        this.cartElement.classList.add('shopping-cart--not-empty');
+        this.checkoutElement = document.createElement('div');
+        this.checkoutElement.className = 'checkout';
+        this.checkoutListElement = document.createElement('ul');
+        this.checkoutElement.appendChild(this.checkoutListElement);
+        this.cartElement.appendChild(this.checkoutElement);
+
+        this.checkoutCreated = true
+    }
+
+    updateCheckout(){
+        this.checkoutListElement.innerHTML = '';
+
+        for (let index in this.productsInCart){
+            const checkoutListItem = document.createElement('li');
+            checkoutListItem.innerHTML = `
+                <img class="checkout__image" src="${this.productsInCart[index].imageUrl}" alt="${this.productsInCart[index].title}">
+                <h2 class="checkout__title">${this.productsInCart[index].title}</h2>
+                <p class="checkout__price">${this.productsInCart[index].price}</p>
+                <p class="checkout__id">${this.productsInCart[index].id}</p>
+                <input class="checkout__count" type="number" placeholder="1">
+        `;
+            this.checkoutListElement.appendChild(checkoutListItem);
+        }
+    }
+
+    toggleCheckoutVisibility(){
+        if(!this.checkoutCreated){
+            return;
+        }
+        this.checkoutElement.classList.toggle('checkout__active');
+        App.toggleBackDrop();
     }
 }
 
@@ -37,21 +99,18 @@ class ProductList {
 }
 
 class ProductItem {
-    constructor(obj) {
-        this.id = obj.id;
-        this.title = obj.title;
-        this.price = obj.price;
-        this.imageUrl = obj.imageUrl;
+    constructor(productObject) {
+        this.productObject = productObject;
     }
 
     render(hookElement){
         const productElement = document.createElement('div');
-        productElement.id = this.id;
+        productElement.id = this.productObject.id;
         productElement.className = 'product';
         productElement.innerHTML = `
-        <h2 class="product__title">${this.title}</h2>
-            <img class="product__image" src="${this.imageUrl}" alt="${this.title}">
-        <p class="product__price">${this.price}$</p>
+        <h2 class="product__title">${ this.productObject.title}</h2>
+            <img class="product__image" src="${ this.productObject.imageUrl}" alt="${ this.productObject.title}">
+        <p class="product__price">${ this.productObject.price}$</p>
         `;
 
         const productElementButton = document.createElement('button');
@@ -64,7 +123,7 @@ class ProductItem {
     }
 
     addToCart(){
-        App.addToCart(this.id, this.price)
+        App.addToCart(this.productObject)
     }
 }
 
@@ -88,12 +147,17 @@ class App {
 
     static render(){
         this.shoppingCart = new ShoppingCart();
+        this.backDrop = new BackDrop();
         this.productList = new ProductList(productArr, '.product-list__wrapper .col');
         this.productList.render();
     }
 
-    static addToCart(id, price){
-        this.shoppingCart.addToCat(id, price);
+    static addToCart(productObject){
+        this.shoppingCart.addToCat(productObject);
+    }
+
+    static toggleBackDrop(){
+        this.backDrop.toggle()
     }
 }
 

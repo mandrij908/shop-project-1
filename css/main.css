@@ -17,6 +17,12 @@ Variables
 ================================================================*/
 :root {
     --base-color-1: #A61C47;
+    --base-color-2: #3363A0;
+    --color-grey: #6B6B6B;
+    --color-white: #fff;
+    --color-balck: #000;
+    --transition-1: all 0.3s ease 0s;
+    --box-shadow-1: 0 10px 8px rgba(208,208,208,0.5);
     --header-height: 100px;
 }
 /*================================================================
@@ -30,9 +36,9 @@ body{
     top: 0;
     left: 0;
     right: 0;
-    background: #fff;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow-1);
     z-index: 1000;
-    box-shadow: 0 10px 8px rgba(208,208,208,0.5);
 }
 .main-header .col{
     display: flex;
@@ -45,14 +51,21 @@ body{
     font-size: 40px;
     text-decoration: none;
 }
+/*================================================================
+Shopping cart
+================================================================*/
 .shopping-cart{
     position: relative;
 }
-.shopping-cart img{
+.shopping-cart--not-empty .shopping-cart__icon,
+.shopping-cart--not-empty .shopping-cart__counter{
+    cursor: pointer;
+}
+.shopping-cart__icon{
     display: block;
     height: 40px;
 }
-.shopping-cart span{
+.shopping-cart__counter{
     position: absolute;
     bottom: -10px;
     right: -15px;
@@ -64,10 +77,91 @@ body{
     padding: 5px;
     border-radius: 50%;
     background: var(--base-color-1);
-    color: #fff;
+    color: var(--color-white);
 }
-.shopping-cart span:empty{
+.shopping-cart__counter:empty{
     display: none;
+}
+/*================================================================
+Checkout
+================================================================*/
+.checkout{
+    position: absolute;
+    left: 40px;
+    transform: translateX(-100%);
+    width: 700px;
+    max-width: 90vw;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-1);
+    z-index: 100;
+}
+.checkout__active{
+    opacity: 1;
+    pointer-events: all;
+}
+.checkout ul{
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    background: var(--color-white);
+    box-shadow: var(--box-shadow-1);
+}
+.checkout li{
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--color-grey);
+}
+.checkout li:last-child{
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.checkout li > *{
+    width: 100px;
+    padding: 0 20px;
+    border-right: 1px solid var(--color-grey);
+}
+.checkout .checkout__image{
+    object-fit: cover;
+    object-position: center;
+    padding-left: 0;
+}
+.checkout .checkout__title{
+    flex-grow: 1;
+    font-size: 20px;
+}
+.checkout .checkout__price{
+
+}
+.checkout .checkout__id{
+
+}
+.checkout .checkout__count{
+    padding: 10px;
+    margin-left: 20px;
+    border: 1px solid var(--base-color-1);
+}
+/*================================================================
+Back drop
+================================================================*/
+.back-drop{
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--color-balck);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-1);
+    z-index: 10;
+}
+.back-drop--active{
+    opacity: 0.5;
+    pointer-events: all;
 }
 /*================================================================
 Product list
@@ -97,7 +191,7 @@ Product list
     flex-direction: column;
     padding: 15px;
     border-radius: 10px;
-    background: #fff;
+    background: var(--color-white);
     box-shadow: 0 4px 15px rgba(208,208,208,0.5);
 }
 .product__title{
@@ -115,7 +209,18 @@ Product list
     font-size: 20px;
 }
 .product__button{
+    padding: 10px;
     margin-top: auto;
+    background: var(--base-color-1);
+    border: 1px solid var(--base-color-1);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: var(--transition-1);
+}
+.product__button:hover,
+.product__button:active{
+    background-color: var(--base-color-2);
+    border-color: var(--base-color-2);
 }
 .product :last-child{
     margin-bottom: 0;
