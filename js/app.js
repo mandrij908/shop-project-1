@@ -13,7 +13,6 @@ class BackDrop {
 class ShoppingCart {
     constructor() {
         this.productsInCart = [];
-        this.sum = 0;
         this.cartElement = document.querySelector('.shopping-cart');
         this.productCounderElement = document.querySelector('.shopping-cart__counter');
         this.productIconElement = document.querySelector('.shopping-cart__icon');
@@ -22,8 +21,27 @@ class ShoppingCart {
         this.checkoutCreated = false;
     }
 
-    addToCat(productObject){
-        this.productsInCart.push(productObject);
+    addToCat(productObject, quantity){
+        productObject.quantity += quantity;
+        productObject.sum += quantity * productObject.price;
+
+
+        if(!this.productsInCart.length){
+            this.productsInCart.push(productObject);
+        } else{
+            let duplicate = false;
+            for(let product of this.productsInCart){
+                if(productObject.id === product.id){
+                    alert('this product is already in cart');
+                    duplicate = true;
+                    return;
+                }
+            }
+            if(!duplicate){
+                this.productsInCart.push(productObject);
+            }
+        }
+
         this.updateCounter();
         this.createCheckout();
         this.updateCheckout();
@@ -51,16 +69,32 @@ class ShoppingCart {
     updateCheckout(){
         this.checkoutListElement.innerHTML = '';
 
-        for (let index in this.productsInCart){
+        for (let product of this.productsInCart){
             const checkoutListItem = document.createElement('li');
             checkoutListItem.innerHTML = `
-                <img class="checkout__image" src="${this.productsInCart[index].imageUrl}" alt="${this.productsInCart[index].title}">
-                <h2 class="checkout__title">${this.productsInCart[index].title}</h2>
-                <p class="checkout__price">${this.productsInCart[index].price}</p>
-                <p class="checkout__id">${this.productsInCart[index].id}</p>
-                <input class="checkout__count" type="number" placeholder="1">
+                <img class="checkout__image" src="${product.imageUrl}" alt="${product.title}">
+                <h2 class="checkout__title">${product.title}</h2>
+                <p class="checkout__price">${product.sum}</p>
+                <p class="checkout__id">${product.id}</p>
         `;
+
+            this.checkoutQuantityElement = document.createElement('input');
+            this.checkoutQuantityElement.className = 'checkout__quantity';
+            this.checkoutQuantityElement.type = 'number';
+            this.checkoutQuantityElement.value = product.quantity;
+            this.checkoutQuantityElement.addEventListener('click', this.changeQuantity.bind(this, product.id, this.checkoutQuantityElement.value));
+            checkoutListItem.appendChild(this.checkoutQuantityElement);
+
             this.checkoutListElement.appendChild(checkoutListItem);
+        }
+    }
+
+    changeQuantity(id, value){
+        for (let product of this.productsInCart){
+            if(product.id === id){
+                product.quantity += value;
+                product.sum += value * product.price;
+            }
         }
     }
 
@@ -101,29 +135,33 @@ class ProductList {
 class ProductItem {
     constructor(productObject) {
         this.productObject = productObject;
+        this.productObject.quantity = 0;
+        this.productObject.sum = 0;
     }
 
     render(hookElement){
-        const productElement = document.createElement('div');
-        productElement.id = this.productObject.id;
-        productElement.className = 'product';
-        productElement.innerHTML = `
+        this.productElement = document.createElement('div');
+        this.productElement.id = this.productObject.id;
+        this.productElement.className = 'product';
+        this.productElement.innerHTML = `
         <h2 class="product__title">${ this.productObject.title}</h2>
-            <img class="product__image" src="${ this.productObject.imageUrl}" alt="${ this.productObject.title}">
+        <img class="product__image" src="${ this.productObject.imageUrl}" alt="${ this.productObject.title}">
         <p class="product__price">${ this.productObject.price}$</p>
+        <input class="product__quantity" type="number" value="1">
         `;
 
-        const productElementButton = document.createElement('button');
-        productElementButton.className = 'product__button';
-        productElementButton.innerText = 'Add to cart';
-        productElementButton.addEventListener('click', this.addToCart.bind(this));
+        this.productElementButton = document.createElement('button');
+        this.productElementButton.className = 'product__button';
+        this.productElementButton.innerText = 'Add to cart';
+        this.productElementButton.addEventListener('click', this.addToCart.bind(this));
 
-        productElement.appendChild(productElementButton);
-        hookElement.appendChild(productElement);
+        this.productElement.appendChild(this.productElementButton);
+        hookElement.appendChild(this.productElement);
     }
 
     addToCart(){
-        App.addToCart(this.productObject)
+        const quantity = +this.productElement.querySelector('.product__quantity').value;
+        App.addToCart(this.productObject, quantity)
     }
 }
 
@@ -152,8 +190,8 @@ class App {
         this.productList.render();
     }
 
-    static addToCart(productObject){
-        this.shoppingCart.addToCat(productObject);
+    static addToCart(productObject, quantity){
+        this.shoppingCart.addToCat(productObject, quantity);
     }
 
     static toggleBackDrop(){
