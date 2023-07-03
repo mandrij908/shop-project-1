@@ -91,12 +91,15 @@ Checkout
     transform: translateX(-100%);
     width: 700px;
     max-width: 90vw;
+    padding: 10px;
     opacity: 0;
     pointer-events: none;
     transition: var(--transition-1);
+    background: var(--color-white);
+    box-shadow: var(--box-shadow-1);
     z-index: 100;
 }
-.checkout__active{
+.checkout--active{
     opacity: 1;
     pointer-events: all;
 }
@@ -104,8 +107,6 @@ Checkout
     list-style-type: none;
     padding: 10px;
     margin: 0;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow-1);
 }
 .checkout li{
     display: flex;
@@ -124,6 +125,9 @@ Checkout
     padding: 0 20px;
     border-right: 1px solid var(--color-grey);
 }
+.checkout li :last-child{
+    border-right: none;
+}
 .checkout .checkout__image{
     object-fit: cover;
     object-position: center;
@@ -133,16 +137,29 @@ Checkout
     flex-grow: 1;
     font-size: 20px;
 }
-.checkout .checkout__price{
-
-}
-.checkout .checkout__id{
-
-}
 .checkout .checkout__quantity{
     padding: 10px;
     margin-left: 20px;
     border: 1px solid var(--base-color-1);
+}
+.checkout .checkout__full-sum{
+    margin: 0;
+    padding: 10px;
+    border-top: 1px solid var(--base-color-1);
+    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
+}
+.checkout .checkout__remove-element{
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-left: 20px;
+    background-image: url('../img/icon-close.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
 }
 /*================================================================
 Back drop
