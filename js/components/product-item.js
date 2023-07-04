@@ -15,11 +15,10 @@ export class ProductItem {
         <h2 class="product__title">${ this.productObject.title}</h2>
         <img class="product__image" src="${ this.productObject.imageUrl}" alt="${ this.productObject.title}">
         <p class="product__price">${ this.productObject.price}$</p>
-        <input class="product__quantity" type="number" value="1" min="1">
-        `;
+        <input class="product__quantity" type="number" value="1" min="1">`;
 
         this.productElementButton = document.createElement('button');
-        this.productElementButton.className = 'product__button';
+        this.productElementButton.className = 'btn';
         this.productElementButton.innerText = 'Add to cart';
         this.productElementButton.addEventListener('click', this.addToCart.bind(this));
 

@@ -16,6 +16,7 @@ export class ShoppingCart {
         productObject.quantity = +quantity;
         productObject.sum = +quantity * productObject.price;
 
+        /*duplicate check*/
         if(!this.productsInCart.length){
             this.productsInCart.push(productObject);
         } else{
@@ -32,6 +33,7 @@ export class ShoppingCart {
             }
         }
 
+        /*render functions*/
         this.updateCounter();
         this.createCheckout();
         this.updateCheckout();
@@ -47,19 +49,33 @@ export class ShoppingCart {
             return;
         }
 
+        /*create checkout*/
         this.cartElement.classList.add('shopping-cart--not-empty', );
         this.checkoutElement = document.createElement('div');
         this.checkoutElement.className = 'checkout';
         this.checkoutListElement = document.createElement('ul');
+        this.checkoutListElement.className = 'checkout__list';
         this.checkoutElement.appendChild(this.checkoutListElement);
 
+        /*create checkout__summary*/
+        this.checkoutSummaryElement = document.createElement('div');
+        this.checkoutSummaryElement.className = 'checkout__summary';
+
+        /*create checkout__full-sum*/
         this.checkoutFullSumElement = document.createElement('p');
         this.checkoutFullSumElement.className = 'checkout__full-sum';
         this.checkoutFullSumElement.textContent = '0';
-        this.checkoutElement.appendChild(this.checkoutFullSumElement);
+        this.checkoutSummaryElement.appendChild(this.checkoutFullSumElement);
 
+        /*create checkout__submit*/
+        this.checkoutSubmitSumElement = document.createElement('button');
+        this.checkoutSubmitSumElement.className = 'checkout__submit btn';
+        this.checkoutSubmitSumElement.textContent = 'Order';
+        this.checkoutSummaryElement.appendChild(this.checkoutSubmitSumElement);
+
+        /*append to DOM*/
+        this.checkoutElement.appendChild(this.checkoutSummaryElement);
         this.cartElement.appendChild(this.checkoutElement);
-
         this.checkoutCreated = true
     }
 
@@ -68,14 +84,15 @@ export class ShoppingCart {
 
         for (let product of this.productsInCart){
             const checkoutListItem = document.createElement('li');
-            checkoutListItem.id = `checkout-item${product.id}`;
+            checkoutListItem.className = 'checkout__item';
+            checkoutListItem.id = `checkout__item-${product.id}`;
             checkoutListItem.innerHTML = `
                 <img class="checkout__image" src="${product.imageUrl}" alt="${product.title}">
                 <h2 class="checkout__title">${product.title}</h2>
                 <p class="checkout__sum">${product.sum}</p>
-                <p class="checkout__id">${product.id}</p>
-        `;
+                <p class="checkout__id">${product.id}</p>`;
 
+            /*create checkout__quantity*/
             const checkoutQuantityElement = document.createElement('input');
             checkoutQuantityElement.className = 'checkout__quantity';
             checkoutQuantityElement.type = 'number';
@@ -84,11 +101,13 @@ export class ShoppingCart {
             checkoutQuantityElement.addEventListener('input', this.changeQuantity.bind(this, product.id, checkoutQuantityElement));
             checkoutListItem.appendChild(checkoutQuantityElement);
 
+            /*create checkout__remove-element*/
             const removeProductElement = document.createElement('div');
             removeProductElement.className = 'checkout__remove-element';
             removeProductElement.addEventListener('click', this.removeProduct.bind(this, product.id));
             checkoutListItem.appendChild(removeProductElement);
 
+            /*append to DOM*/
             this.checkoutListElement.appendChild(checkoutListItem);
         }
     }
@@ -99,7 +118,7 @@ export class ShoppingCart {
             if(product.id === id){
                 product.quantity = +checkoutQuantityElement.value;
                 product.sum = +checkoutQuantityElement.value * product.price;
-                document.querySelector( `#checkout-item${product.id} .checkout__sum`).textContent = product.sum;
+                document.querySelector( `#checkout__item-${product.id} .checkout__sum`).textContent = product.sum;
                 this.updateFullSum();
             }
         }
@@ -121,7 +140,6 @@ export class ShoppingCart {
     }
 
     removeProduct(id){
-
         for (let product of this.productsInCart) {
             if (product.id === id) {
                 document.querySelector( `#checkout-item${product.id}`).remove();

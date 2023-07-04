@@ -8,6 +8,8 @@ Variables
 -------------------------------------
 -------------------------------------
 -------------------------------------
+-------------------------------------
+-------------------------------------
  */
 
 /*Filters: https://codepen.io/sosuke/pen/Pjoqqp*/
@@ -24,6 +26,30 @@ Variables
     --transition-1: all 0.3s ease 0s;
     --box-shadow-1: 0 10px 8px rgba(208,208,208,0.5);
     --header-height: 100px;
+}
+/*================================================================
+Btn
+================================================================*/
+.btn{
+    padding: 10px;
+    background: var(--base-color-1);
+    border: 1px solid var(--base-color-1);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: var(--transition-1);
+}
+.btn:hover,
+.btn:active{
+    background-color: var(--base-color-2);
+    border-color: var(--base-color-2);
+}
+/*================================================================
+Inputs
+================================================================*/
+.main-body input{
+    padding: 10px;
+    border: 1px solid var(--base-color-1);
+    border-radius: 0;
 }
 /*================================================================
 Header
@@ -91,7 +117,7 @@ Checkout
     transform: translateX(-100%);
     width: 700px;
     max-width: 90vw;
-    padding: 10px;
+    padding: 20px;
     opacity: 0;
     pointer-events: none;
     transition: var(--transition-1);
@@ -103,54 +129,44 @@ Checkout
     opacity: 1;
     pointer-events: all;
 }
-.checkout ul{
+.checkout__list{
     list-style-type: none;
-    padding: 10px;
+    padding: 0 0 10px;
     margin: 0;
 }
-.checkout li{
+.checkout__item{
     display: flex;
     align-items: center;
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid var(--color-grey);
 }
-.checkout li:last-child{
+.checkout__item:last-child{
     padding-bottom: 0;
     margin-bottom: 0;
     border-bottom: none;
 }
-.checkout li > *{
+.checkout__item > *{
     width: 100px;
     padding: 0 20px;
     border-right: 1px solid var(--color-grey);
 }
-.checkout li :last-child{
+.checkout__item :last-child{
     border-right: none;
 }
-.checkout .checkout__image{
+.checkout__image{
     object-fit: cover;
     object-position: center;
     padding-left: 0;
 }
-.checkout .checkout__title{
+.checkout__title{
     flex-grow: 1;
     font-size: 20px;
 }
-.checkout .checkout__quantity{
-    padding: 10px;
+.checkout__quantity{
     margin-left: 20px;
-    border: 1px solid var(--base-color-1);
 }
-.checkout .checkout__full-sum{
-    margin: 0;
-    padding: 10px;
-    border-top: 1px solid var(--base-color-1);
-    text-align: right;
-    font-size: 20px;
-    font-weight: 600;
-}
-.checkout .checkout__remove-element{
+.checkout__remove-element{
     width: 30px;
     height: 30px;
     padding: 0;
@@ -160,6 +176,22 @@ Checkout
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+}
+/*================================================================
+Checkout summary
+================================================================*/
+.checkout__summary{
+    display: flex;
+    align-items: center;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--base-color-1);
+}
+.checkout__full-sum{
+    flex-grow: 1;
+    margin: 0 20px 0 0;
+    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
 }
 /*================================================================
 Back drop
@@ -201,7 +233,7 @@ Product list
     }
 }
 /*================================================================
-Product list
+Product item
 ================================================================*/
 .product{
     display: flex;
@@ -225,25 +257,9 @@ Product list
     color: var(--base-color-1);
     font-size: 20px;
 }
-.product__button{
-    padding: 10px;
-    background: var(--base-color-1);
-    border: 1px solid var(--base-color-1);
-    color: var(--color-white);
-    cursor: pointer;
-    transition: var(--transition-1);
-}
-.product__button:hover,
-.product__button:active{
-    background-color: var(--base-color-2);
-    border-color: var(--base-color-2);
+.product__quantity{
+    margin: auto 0 10px;
 }
 .product :last-child{
     margin-bottom: 0;
-}
-.product__quantity{
-    padding: 10px;
-    margin: auto 0 10px;
-    border: 1px solid var(--base-color-1);
-    border-radius: 0;
 }
