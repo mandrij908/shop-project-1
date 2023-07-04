@@ -1,6 +1,7 @@
 import {BackDrop} from './components/back-drop.js';
 import {ProductList} from './components/product-list.js';
 import {ShoppingCart} from './components/shopping-cart.js';
+import {ProductRequests} from './components/requestProducts.js';
 
 const productArr = [
     {
@@ -25,15 +26,19 @@ export class App {
         this.backDrop = new BackDrop();
         this.productList = new ProductList(productArr, '.product-list__wrapper .col');
         this.productList.render();
+        this.productRequests = new ProductRequests();
     }
 
     static addToCart(productObject, quantity){
         this.shoppingCart.addToCat(productObject, quantity);
     }
 
-
     static toggleModals(){
         this.backDrop.toggleModals();
+    }
+
+    static postOrder(){
+        this.productRequests.post();
     }
 }
 

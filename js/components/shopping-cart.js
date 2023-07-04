@@ -71,6 +71,7 @@ export class ShoppingCart {
         this.checkoutSubmitSumElement = document.createElement('button');
         this.checkoutSubmitSumElement.className = 'checkout__submit btn';
         this.checkoutSubmitSumElement.textContent = 'Order';
+        this.checkoutSubmitSumElement.addEventListener('click', this.postOrder.bind(this));
         this.checkoutSummaryElement.appendChild(this.checkoutSubmitSumElement);
 
         /*append to DOM*/
@@ -156,4 +157,9 @@ export class ShoppingCart {
         this.updateCounter();
         this.updateFullSum();
     }
+
+    postOrder(){
+        App.postOrder();
+    }
+
 }
